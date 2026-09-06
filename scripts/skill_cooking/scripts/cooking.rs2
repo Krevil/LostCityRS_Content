@@ -1,54 +1,55 @@
 [oplocu,_cooking_oven] @attempt_cook_item(last_useitem);
 [oplocu,_cooking_fire]
-if(loc_type = viking_house_fire | loc_type = viking_longhall_fire) {
-    if(%viking < ^viking_complete) {
-        mes("Only members of the Fremennik may use this fire.");
-        return;
-    }
-}
+																	
+									
+																
+			   
+	 
+ 
 if(oc_param(last_useitem, unlit_arrow) = ^true) { // might not work on every fire?
     @light_firearrow(last_useitem);
-} else if (~in_tutorial_island(coord) = true) {
-    @tut_attempt_cook_item(last_useitem);
+											   
+										 
 } else {
     @attempt_cook_item(last_useitem);
 }
 
+
 [label,attempt_cook_item](obj $uncooked_item)
-//not sure if this is used
-p_arrivedelay();
-// special cases
-if($uncooked_item = tbwt_jogre_bones_marinated_in_karambwanji | $uncooked_item = tbwt_burnt_jogre_bones_marinated_in_karambwanji) {
-    ~mesbox("The jogre bones are already marinated!|They don't need any more cooking.");
-    return;
-}
-if($uncooked_item = tbwt_jogre_bones_in_cooked_karambwanji_paste | $uncooked_item = tbwt_burnt_jogre_bones_in_cooked_karambwanji_paste) {
-    @explode_cooked_jogre_bones($uncooked_item);
-}
-if($uncooked_item = tbwt_cooked_karambwan | $uncooked_item = tbwt_poorly_cooked_karambwan) {
-    ~mesbox("You cannot cook that again; it's already cooked.");
-    return;
-}
+						  
+				
+				
+																																   
+																						
+		   
+ 
+																																		 
+												
+ 
+																							
+																
+		   
+ 
 // get item data from db
 db_find(cooking_generic:uncooked, $uncooked_item);
-// karambwan cooking
-def_namedobj $product;
-if($uncooked_item = tbwt_raw_karambwan) {
-    if (map_members = ^false) {
-        mes("You can only make that on a members' server.");
-        return;
-    }
-    if(%tbwt_tinsay = ^tbwt_tinsay_claimed_final_reward) {
-        $product = ~multiobj2("How would you like to cook your karambwan?", 
-            tbwt_poorly_cooked_karambwan, 0, -15, 175, "\\n\\n\\n\\nPoorly", 5, -1,
-            tbwt_cooked_karambwan, 0, -15, 175, "\\n\\n\\n\\nThoroughly", 4, -1
-        );
-        if_close;
-    } else {
-        $product = tbwt_poorly_cooked_karambwan;
-    }
-    db_find(cooking_generic:cooked, $product);
-}
+					
+					  
+										 
+							   
+															
+			   
+	 
+														  
+																			
+																				   
+																			   
+		  
+				 
+			
+												
+	 
+											  
+ 
 def_dbrow $data = db_findnext;
 if ($data = null) {
     ~mesbox("You can't cook that.");
@@ -73,12 +74,12 @@ if (oc_members($cooked_item) = true | oc_members($uncooked_item) = true) {
 }
 // check if player has high enough level
 def_int $levelrequired = db_getfield($data,cooking_generic:levelrequired,0);
-def_string $levelrequired_message = db_getfield($data,cooking_generic:levelrequired_message,0);
-if (string_length($levelrequired_message) < 1 & compare($levelrequired_message, "0") ! 0) {
-    $levelrequired_message = "You need a Cooking level of <tostring($levelrequired)> to cook <lowercase(oc_name($cooked_item))>.";
-}
+																							   
+																						   
+																																  
+ 
 if (stat(cooking) < $levelrequired) {
-    ~mesbox($levelrequired_message);
+    ~mesbox("You need a Cocking level of <tostring($levelrequired)> to cook <lowercase(oc_name($cooked_item))>.");
     return;
 }
 // macro event
@@ -87,14 +88,14 @@ if (afk_event = ^true) {
     return;
 }
 // def variables
-def_string $cookmessage;
+						
 def_string $succesmessage = db_getfield($data,cooking_generic:successmessage,0);
 def_string $burnmessage = db_getfield($data,cooking_generic:burnmessage,0);
 def_seq $anim;
 // field can specify "0" to not show any message at all. Only applies to heating up cocktails AFAIK
 // else if not specified at all it just shows the default message below.
 if (string_length($succesmessage) < 1 & compare($succesmessage, "0") ! 0) {
-    $succesmessage = "The <lowercase(oc_name($cooked_item))> is now nicely cooked.";
+    $succesmessage = "You successfully cook <~add_article(lowercase(oc_name($cooked_item)))>.";
 }
 if (string_length($burnmessage) < 1 & compare($burnmessage, "0") ! 0) {
     $burnmessage = "You accidentally burn the <lowercase(oc_name($cooked_item))>.";
@@ -115,21 +116,21 @@ $low_cookomatic, $high_cookomatic = db_getfield($data,cooking_generic:successcha
 
 def_category $cooking_source = lc_category(loc_type);
 if ($cooking_source = cooking_oven) {
-    $cookmessage = db_getfield($data,cooking_generic:cookmessage_range,0);
+																		  
     if ($low_range > null | $high_range > null) {
         $low = $low_range;
         $high = $high_range;
     }
-    $anim = human_cooking;
-    if (string_length($cookmessage) < 1 & compare($cookmessage, "0") ! 0) {
-        $cookmessage = "You put the <lowercase(oc_name($cooked_item))> on the stove.";
-    }
+    $anim = human_potterywheel;
+																		   
+																					  
+	 
 } else if ($cooking_source = cooking_fire) {
-    $cookmessage = db_getfield($data,cooking_generic:cookmessage_fire,0);
+																		 
     $anim = human_firecooking;
-    if (string_length($cookmessage) < 1 & compare($cookmessage, "0") ! 0) {
-        $cookmessage = "You cook the <lowercase(oc_name($cooked_item))> on the fire..."; // imgur.com/ESssj2u
-    }
+																		   
+																											 
+	 
 }
 // cooking gauntlets prioritize over cook o matic it seems
 if (inv_total(worn, gauntlets_of_cooking) > 0 & ($low_gauntlets > null | $high_gauntlets > null)) {
@@ -138,6 +139,41 @@ if (inv_total(worn, gauntlets_of_cooking) > 0 & ($low_gauntlets > null | $high_g
 } else if (loc_type = cooksquestrange & ($low_cookomatic > null | $high_cookomatic > null)) { // lumbridge cook-o-matic 100
     $low = $low_cookomatic;
     $high = $high_cookomatic;
+}
+						 
+														  
+						   
+						 
+								  
+						
+		
+													 
+ 
+def_namedobj $burnt_item = db_getfield($data,cooking_generic:burnt,0);
+def_namedobj $additional_item = db_getfield($data,cooking_generic:additional,0);
+def_int $experience = db_getfield($data,cooking_generic:experience,0);
+if (inv_total(inv, $uncooked_item) = 1) {
+    @cook_item($low, $high, $anim, $succesmessage, $burnmessage, $uncooked_item, $cooked_item, $burnt_item, $additional_item, $experience);
+    return;
+}
+def_int $count;
+def_obj $product;
+$product, $count = ~skill_multi1($uncooked_item, 0, -15, 175, "\\n\\n\\n\\n<oc_name($cooked_item)>", "How many would you like to cook?");
+weakqueue*(cook_generic, 3)(sub($count, 1), $low, $high, $anim, $succesmessage, $burnmessage, $uncooked_item, $cooked_item, $burnt_item, $additional_item, $experience);
+@cook_item($low, $high, $anim, $succesmessage, $burnmessage, $uncooked_item, $cooked_item, $burnt_item, $additional_item, $experience);
+
+
+																			
+[label,cook_item](int $low, int $high, seq $anim, string $succesmessage, string $burnmessage, obj $uncooked_item, namedobj $cooked_item, namedobj $burnt_item, namedobj $additional_item, int $experience)
+																	  
+					  
+ 
+anim($anim, 0);
+sound_synth(fry, 1, 0);
+switch_obj($uncooked_item) {
+    case half_baked_batta : $cooked_item = ~gnome_batta;
+    case half_baked_bowl : $cooked_item = ~gnome_bowl;
+    case half_baked_crunchy : $cooked_item = ~gnome_crunchies;
 }
 def_boolean $passes_roll;
 // field can specify 0 to always burn, or 1 to always cook
@@ -148,28 +184,10 @@ if ($low = 0 & $high = 0) {
 } else {
     $passes_roll = stat_random(cooking, $low, $high);
 }
-def_namedobj $burnt_item = db_getfield($data,cooking_generic:burnt,0);
-def_namedobj $additional_item = db_getfield($data,cooking_generic:additional,0);
-def_int $experience = db_getfield($data,cooking_generic:experience,0);
-@cook_item($passes_roll, $anim, $cookmessage, $succesmessage, $burnmessage, $uncooked_item, $cooked_item, $burnt_item, $additional_item, $experience);
-
-
-// i put this in a label so its easier to transition to weak queues later on
-[label,cook_item](boolean $passes_roll, seq $anim, string $cookmessage, string $succesmessage, string $burnmessage, obj $uncooked_item, namedobj $cooked_item, namedobj $burnt_item, namedobj $additional_item, int $experience)
-if($uncooked_item ! eadgar_troll_thistle) { // no cookmessage for this
-    mes($cookmessage);
-}
-anim($anim, 0);
-sound_synth(fry, 1, 0);
-switch_obj($uncooked_item) {
-    case half_baked_batta : $cooked_item = ~gnome_batta;
-    case half_baked_bowl : $cooked_item = ~gnome_bowl;
-    case half_baked_crunchy : $cooked_item = ~gnome_crunchies;
-}
-// rsc delays for about 3 ticks.
-// This post says they removed unnecessary delays and "None of the above no longer take any more time than in Runescape 1."
-// https://oldschool.runescape.wiki/w/Update:Huge_Runescape_2_update
-p_delay(1);
+								
+																														   
+																	
+		   
 inv_del(inv, $uncooked_item, 1);
 
 if ($passes_roll = true) {
@@ -193,3 +211,17 @@ if ($passes_roll = true) {
         inv_add(inv, $additional_item, 1);
     }
 }
+
+[queue,cook_generic](int $count, int $low, int $high, seq $anim, string $succesmessage, string $burnmessage, obj $uncooked_item, namedobj $cooked_item, namedobj $burnt_item, namedobj $additional_item, int $experience)
+if ($count < 1) {
+    return;
+}
+if (inv_total(inv, $uncooked_item) < 1) {
+    mes("You don't have any more <lowercase(oc_name($cooked_item))> to cook."); // https://youtu.be/Pa_BfSX1qmI?t=91
+    return;
+}
+weakqueue*(cook_generic, 3)(sub($count, 1), $low, $high, $anim, $succesmessage, $burnmessage, $uncooked_item, $cooked_item, $burnt_item, $additional_item, $experience);
+@cook_item($low, $high, $anim, $succesmessage, $burnmessage, $uncooked_item, $cooked_item, $burnt_item, $additional_item, $experience);
+
+[debugproc,c]
+inv_clear(inv);

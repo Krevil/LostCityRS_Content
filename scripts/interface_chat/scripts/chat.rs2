@@ -594,6 +594,7 @@ while ($page < $pagetotal) {
     $page = calc($page + 1);
 }
 
+
 [proc,multiobj2](string $title, namedobj $obj1, int $x1, int $y1, int $scale1, string $string1, int $sx1, int $sy1, namedobj $obj2, int $x2, int $y2, int $scale2, string $string2, int $sx2, int $sy2)(namedobj)
 // reset any positions out of place
 if_setposition(multiobj2:obj1, $x1, $y1);
@@ -706,6 +707,44 @@ switch_component (last_com) {
     case multiobj4:com_9 : return($obj4);
     case default : return(null);
 }
+
+
+[proc,skill_multi1](obj $obj1, int $x1, int $y1, int $scale1, string $string1, string $string2)(obj, int)
+if_openchat(skill_multi1);
+
+if_setposition(skill_multi1:model_a, $x1, $y1);
+
+if_setobject(skill_multi1:model_a, $obj1, $scale1);
+
+if_settext(skill_multi1:prompt, $string2);
+if_settext(skill_multi1:make1_a, $string1);
+
+if_addresumebutton(skill_multi1:make1_a);
+if_addresumebutton(skill_multi1:make5_a);
+if_addresumebutton(skill_multi1:make10_a);
+if_addresumebutton(skill_multi1:makex_a);
+p_pausebutton;
+
+def_component $last_com = last_com;
+if(%weakqueue_map_clock = map_clock) {
+    if_close;
+    p_delay(0);
+}
+
+switch_component ($last_com) {
+    case skill_multi1:makex_a :
+        p_countdialog;
+        return($obj1, last_int);
+    case skill_multi1:make10_a :
+        return($obj1, 10);
+    case skill_multi1:make5_a :
+        return($obj1, 5);
+    case skill_multi1:make1_a :
+        return($obj1, 1);
+    case default :
+        return(null, null);
+}
+
 
 
 [proc,skill_multi2](namedobj $obj1, int $x1, int $y1, int $scale1, string $string1, namedobj $obj2, int $x2, int $y2, int $scale2, string $string2)(namedobj, int)
@@ -1117,3 +1156,4 @@ if(p_finduid(uid) = true) {
 if(p_finduid(uid) = true) {
     %weakqueue_map_clock = map_clock;
 }
+
