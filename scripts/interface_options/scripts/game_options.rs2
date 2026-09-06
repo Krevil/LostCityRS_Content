@@ -96,3 +96,12 @@ if_close;
 [if_button,options:com_48]
 if_close;
 %option_pm = 0;
+
+[if_button,options:com_52]
+if_close;
+%option_attack = 1;
+
+[if_button,options:com_53]
+if_close;
+%option_attack = 0;
+
