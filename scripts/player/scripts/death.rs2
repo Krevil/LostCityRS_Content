@@ -32,7 +32,7 @@ if (findhero = true) {
 p_teleport(map_findsquare(0_50_50_21_18, 0, 2, ^map_findsquare_lineofwalk));
 buildappearance(worn);
 ~prayer_deactivate_all;
-~follower_death;
+//~follower_death;
 anim(null, 0);
 p_stopaction;
 

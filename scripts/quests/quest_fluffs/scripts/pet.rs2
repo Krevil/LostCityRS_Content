@@ -60,9 +60,11 @@ switch_int (getbit_range(%cat_growth, 0, 4)) {
     case 16 :
         npc_say("Miaow!");
         ~chatplayer("<p,scared>I think it's hungry!"); //youtu.be/1vY_uGOq6qM //mes added later
+        mes("Your kitten is hungry.");
     case 18 :
         npc_say("Meeeooowww!");
         ~chatplayer("<p,scared>I think it's really hungry!");
+        mes("Your kitten is really hungry!");
     case 20 :
         mes("Your kitten has run away to look for food.");
         ~follower_death;
@@ -73,9 +75,11 @@ switch_int (getbit_range(%cat_growth, 5, 10)) {
     case 40 :
         npc_say("Purr...");
         ~chatplayer("<p,neutral>I think it wants some attention.");
+        mes("Your kitten wants some attention.");
     case 45 :
         npc_say("Meeeooowww...");
         ~chatplayer("<p,neutral>I think it's feeling lonely."); //738
+        mes("Your kitten is feeling lonely.");
     case 50 :
         mes("Your kitten got lonely and ran off.");
         ~follower_death;

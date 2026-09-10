@@ -577,7 +577,7 @@ activegraphic=miscgraphics,9
 
 [com_49]
 type=text
-x=20
+x=57
 y=165
 width=15
 height=14
@@ -588,8 +588,8 @@ colour=0xFFFF00
 
 [com_50]
 type=text
-x=57
-y=164
+x=20
+y=165
 width=20
 height=14
 font=p12_full
