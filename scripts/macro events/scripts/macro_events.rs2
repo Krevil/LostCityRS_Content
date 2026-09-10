@@ -90,7 +90,76 @@ return(enum(int, npc, general_macro_events, $event));
 
 [proc,macro_event_set_random]()(int)
 def_int $random = ~random_range(1, enum_getoutputcount(general_macro_events));
-
+switch_int(random(67)) {
+    case 0 : mes("Reminder: Monkey business is strictly forbidden.");
+    case 1 : mes("Reminder: Meatpuppets are against the rules.");
+    case 2 : mes("You have gained one duck point.");
+    case 3 : mes("You have lost one duck point.");
+    case 4 : mes("User tutti frutti829 has been banned.");
+    case 5 : mes("Seismic activity detected.");
+    case 6 : mes("Oh dear, you are bread.");
+    case 7 : mes("Congratulations, you just advanced a skullduggery level.");
+    case 8 : mes("Fruit salad has been disabled.");
+    case 9 : mes("Beware of Rodents of Unusual Size.");
+    case 10 : mes("Snacks are available at the minibar.");
+    case 11 : mes("You get some magic logs.");
+    case 12 : mes("Extra dragons can be requested at the checkout counter.");
+    case 13 : mes("Reminder: Bananas are not free.");
+    case 14 : mes("The Great Chicken is amused.");
+    case 15 : mes("Something smells funny...");
+    case 16 : mes("Warning: Hippos ahead.");
+    case 17 : mes("Zezima has logged in.");
+    case 18 : mes("Juggling privileges have been revoked.");
+    case 19 : mes("Depth charges have been set.");
+    case 20 : mes("Your cat has evolved into a sphinx. Watch out!");
+    case 21 : mes("Flights to Morytania have been postponed until April.");
+    case 22 : mes("Camping is not allowed in this area.");
+    case 23 : mes("Don't turn around.");
+    case 24 : mes("Whatever you do, don't blink.");
+    case 25 : mes("The Empty Lord stirs.");
+    case 26 : mes("Sending trade offer...");
+    case 27 : mes("Get your axes from Bob's Axes.");
+    case 28 : mes("Your Ultimate Ability is now charged!");
+    case 29 : mes("You suddenly feel cold.");
+    case 30 : mes("I heard Guthix snores.");
+    case 31 : mes("Listen close, they don't want me to tell you this.");
+    case 32 : mes("The ground begins to shake.");
+    case 33 : mes("Someone is watching.");
+    case 34 : mes("Why are we here?");
+    case 35 : mes("The bomb has been planted.");
+    case 36 : mes("Hold on, how did you do that?");
+    case 37 : mes("Nobody, um, nobody expects the, um, err... the Spanish Inquisition!");
+    case 38 : mes("Report to your nearest Democracy Officer for re-education.");
+    case 39 : mes("The sound of sinister laughter echoes in the distance.");
+    case 40 : mes("This doesn't seem physically possible!");
+    case 41 : mes("If anyone offers you a jelly rune, do not accept it! We're still not sure what it does.");
+    case 42 : mes("Oi, stop clicking on me!");
+    case 43 : mes("Hey, that tickles.");
+    case 44 : mes("What's that ticking sound?");
+    case 45 : mes("Has anyone seen the sky? I seem to have lost it.");
+    case 46 : mes("Slime is falling from the sky!");
+    case 47 : mes("You swing your inferno adze at the tree.");
+    case 48 : mes("Wait there a second.");
+    case 49 : mes("You should not stay here.");
+    case 50 : mes("There is something very wrong with this place.");
+    case 51 : mes("There is now a sale on at DFS.");
+    case 52 : mes("Discounted blueberry pie can now be bought from King Roald.");
+    case 53 : mes("Double kill. Triple kill. OVERKILL.");
+    case 54 : mes("You do not have a spade which you have the level to use.");
+    case 55 : mes("Your duck points have been refunded.");
+    case 56 : mes("Reminder: If your hitpoints drop to zero, you die.");
+    case 57 : mes("Come quick, there's a drop party happening in deep wilderness!");
+    case 58 : mes("Watch out for sudden cave-ins.");
+    case 59 : mes("a q p");
+    case 60 : mes("Your chances of being killed by The Thing are low, but never zero.");
+    case 61 : mes("Sorry, I didn't quite catch that.");
+    case 62 : mes("Get your free Twisted Bow, now available at the farming guild.");
+    case 63 : mes("Warning: Do not feed the cows.");
+    case 64 : mes("You catch an elephant. Good luck fitting it in your inventory.");
+    case 65 : mes("You catch some piranhas.");
+    case 66 : mes("You have run out of duck points.");
+    case 67 : mes("You have completed the double duck challenge.");
+}
 if ($random >= ^teleport_macro_start & (random(4) ! 0 | ~wilderness_level(coord) > 20)) {
     //Only give teleport events 25% of the time they are rolled and only under 20 wildy
     while ($random >= ^teleport_macro_start) {
