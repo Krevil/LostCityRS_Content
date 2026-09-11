@@ -59,6 +59,10 @@ while ($i <= enum_getoutputcount(stats)) {
 [timer,health_regen]
 stat_heal(hitpoints, 1, 0);
 
+//very slowly regen prayer
+[timer,prayer_regen]
+stat_heal(prayer, 1, 0);
+
 [proc,stat_reset](stat $stat)
 def_int $d = sub(stat($stat), stat_base($stat));
 
