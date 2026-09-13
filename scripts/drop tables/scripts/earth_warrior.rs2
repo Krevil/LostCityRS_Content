@@ -4,6 +4,9 @@ if (npc_findhero = ^false) {
     return;
 }
 
+// Tertiary
+~trail_easycluedrop(128, npc_coord);
+
 def_int $random = random(128);
 
 if ($random < 3) {

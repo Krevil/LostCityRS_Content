@@ -9,6 +9,9 @@ obj_add(npc_coord, npc_param(death_drop), 1, ^lootdrop_duration);
 
 def_int $random = random(128);
 
+// Tertiary
+~trail_mediumcluedrop(128, npc_coord);
+
 if ($random < 5) {
     obj_add(npc_coord, black_sq_shield, 1, ^lootdrop_duration);
 } else if ($random < 7) {
