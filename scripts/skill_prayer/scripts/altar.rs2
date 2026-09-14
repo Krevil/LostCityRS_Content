@@ -17,3 +17,26 @@ if (stat(prayer) >= stat_base(prayer)) {
 }
 anim(human_pray, 0);
 stat_add(prayer, calc($amount - stat(prayer)), 0);
+
+
+[oplocu,_prayer_altar]
+if (oc_category(last_useitem) = bones) {
+    @offer_bones(last_useitem);
+}
+
+[label,offer_bones](obj $last_item)
+mes("You offer the bones to the altar...");
+anim(human_castheal, 0);
+sound_synth(prayer_recharge, 1, 0);
+p_stopaction;
+p_delay(0);
+inv_del(inv, $last_item, 1);
+def_int $xp = oc_param($last_item, bone_exp);
+$xp = scale(3, 2, $xp); // 1.5x
+stat_advance(prayer, $xp);
+mes("The gods accept your offering.");
+
+if (afk_event = ^true) {
+    @macro_event_prayer;
+}
+
