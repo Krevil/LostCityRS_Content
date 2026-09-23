@@ -11,8 +11,8 @@ if (coord = $new_loc_coord & loc_shape = wall_diagonal) {
 }
 sound_synth(loc_param(open_sound), 1, 0);
 // Temp note: dur does not need updated
-loc_del(500);
-loc_add($new_loc_coord, $new_loc, modulo(add(loc_angle, 1), 4), loc_shape, 500);
+loc_del(^door_open_time);
+loc_add($new_loc_coord, $new_loc, modulo(add(loc_angle, 1), 4), loc_shape, ^door_open_time);
 // mes("Loc coord: <~coord_tostring(loc_coord)>");
 
 [oploc1,_door_opened]
@@ -28,8 +28,8 @@ if (coord = $new_loc_coord & loc_shape = wall_diagonal) {
 }
 sound_synth(loc_param(close_sound), 1, 0);
 // Temp note: dur does not need updated
-loc_del(500);
-loc_add($new_loc_coord, $new_loc, modulo(add(loc_angle, 3), 4), loc_shape, 500);
+loc_del(^door_open_time);
+loc_add($new_loc_coord, $new_loc, modulo(add(loc_angle, 3), 4), loc_shape, ^door_open_time);
 // mes("Loc coord: <~coord_tostring(loc_coord)>");
 
 [oploc1,_reverse_door_closed]
@@ -40,8 +40,8 @@ if (coord = $new_loc_coord & loc_shape = wall_diagonal) {
     p_delay(1);
 }
 sound_synth(loc_param(open_sound), 1, 0);
-loc_del(500);
-loc_add($new_loc_coord, $new_loc, modulo(add(loc_angle, 3), 4), loc_shape, 500);
+loc_del(^door_open_time);
+loc_add($new_loc_coord, $new_loc, modulo(add(loc_angle, 3), 4), loc_shape, ^door_open_time);
 
 [oploc1,_reverse_door_opened]
 def_coord $new_loc_coord = ~movecoord_loc_return(0, 0);
@@ -51,5 +51,5 @@ if (coord = $new_loc_coord & loc_shape = wall_diagonal) {
     p_delay(1);
 }
 sound_synth(loc_param(close_sound), 1, 0);
-loc_del(500);
-loc_add($new_loc_coord, $new_loc, modulo(add(loc_angle, 1), 4), loc_shape, 500);
+loc_del(^door_open_time);
+loc_add($new_loc_coord, $new_loc, modulo(add(loc_angle, 1), 4), loc_shape, ^door_open_time);
