@@ -94,9 +94,9 @@ while ($i < $size) {
     $i = calc($i + 1);
 }
 
-inv_dropall(inv, coord, ^lootdrop_duration);
-inv_dropall(worn, coord, ^lootdrop_duration);
-obj_addall(coord, bones, 1, ^lootdrop_duration);
+inv_dropall(inv, coord, ^playerdrop_duration);
+inv_dropall(worn, coord, ^playerdrop_duration);
+obj_addall(coord, bones, 1, ^playerdrop_duration);
 ~moveallinv(deathkeep, inv);
 inv_clear(deathkeep);
 
