@@ -1,5 +1,5 @@
 [login,_]
-mes(":darkred:Welcome to RuneScape.");
+mes(":darkred:Welcome to DuckScape.");
 cam_reset;
 
 %musicplay = 1; // set to auto on login
