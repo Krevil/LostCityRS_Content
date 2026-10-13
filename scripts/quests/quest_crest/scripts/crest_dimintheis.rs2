@@ -94,45 +94,23 @@ queue(crest_complete, 0, 0);
 
 [label,crest_dimintheis_gauntlets]
 ~chatnpc("<p,happy>You have my eternal gratitude adventurer, for all you have done in saving my family's honour. Perhaps some day my sons will overcome their differences.");
-if (testbit(%crest_spells_levers_gauntlets, ^crest_cooking_gauntlets_chosen) = ^true) {
-    if (~obj_gettotal(gauntlets_of_cooking) = 0) {
-        @crest_dimintheis_offer_gauntlets(gauntlets_of_cooking);
-    }
-}
-else if (testbit(%crest_spells_levers_gauntlets, ^crest_goldsmithing_gauntlets_chosen) = ^true) {
-    if (~obj_gettotal(gauntlets_of_goldsmithing) = 0) {
-        @crest_dimintheis_offer_gauntlets(gauntlets_of_goldsmithing);
-    }
-}
-else if (testbit(%crest_spells_levers_gauntlets, ^crest_chaos_gauntlets_chosen) = ^true) {
-    if (~obj_gettotal(gauntlets_of_chaos) = 0) {
-        @crest_dimintheis_offer_gauntlets(gauntlets_of_chaos);
-    }
-}
-else if (~obj_gettotal(steel_gauntlets) = 0) {
-    @crest_dimintheis_offer_gauntlets(steel_gauntlets);
-}
+@crest_dimintheis_offer_gauntlets(steel_gauntlets);
 
 [label,crest_dimintheis_offer_gauntlets](namedobj $gauntlets)
 def_string $gauntlets_name = "steel gauntlets";
-switch_obj($gauntlets) {
-    case gauntlets_of_cooking :
-        $gauntlets_name = "cooking gauntlets";
-    case gauntlets_of_goldsmithing :
-        $gauntlets_name = "goldsmithing gauntlets";
-    case gauntlets_of_chaos :
-        $gauntlets_name = "chaos gauntlets";
-}
-if(inv_freespace(inv) = 0) {
-    ~chatnpc("<p,happy>Your <$gauntlets_name> returned to me through their magic power recently. Clear some space and you can have them back."); 
-}
-else {
-    ~chatnpc("<p,happy>Your <$gauntlets_name> returned to me through their magic power recently. Would you like them back?");
+if(inv_freespace(inv) > 0) {
+     ~chatnpc("<p,happy>Would you be interested in some more steel gauntlets? I can sell you another pair for 25000 gold.");
     def_int $op = ~p_choice2("Yes please.", 1, "Not right now.", 2);
     if ($op = 1) {
         ~chatplayer("<p,happy>Yes please.");
-        ~chatnpc("<p,neutral>Here you go.");
-        inv_add(inv, $gauntlets, 1);
+        if (inv_total(inv, coins) >= 25000) {
+            ~chatnpc("<p,neutral>Here you go.");
+            inv_del(inv, coins, 25000);
+            inv_add(inv, $gauntlets, 1);
+        }
+        else {
+            ~chatnpc("<p,sad>I'm sorry, but you don't seem to have enough gold.");
+        }
     }
     else {
         ~chatplayer("<p,neutral>Not right now.");
